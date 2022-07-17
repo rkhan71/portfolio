@@ -3,6 +3,31 @@
 {% block page %}Contact{% endblock %}
 
 {% block body %}
+{% if not sent %}
+<div class="container px-5">
+    <form action="/contact" method="POST">
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email Address</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
+        </div>
+        <div class="mb-3">
+            <label for="message" class="form-label">Message</label>
+            <textarea class="form-control" id="message" name="message" placeholder="Hello!" rows="3"></textarea>
+        </div>
+        <div class="mb-3 d-flex justify-content-center">
+            <button type="submit" class="btn btn-outline-dark">Send</button>
+        </div>
+    </form>
+</div>
+{% else %}
+<div class="container">
+    Your message has been sent successfully! A copy has been sent to the email address you put in above. It's probably in your spam folder.
+</div>
+{% endif %}
 <script>
     let element = document.querySelector("#contact")
     element.classList.add("active")
