@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+
+{% block page %}Projects{% endblock %}
+
+{% block body %}
+<script>
+    let element = document.querySelector("#projects")
+    element.classList.add("active")
+    element.setAttribute("aria-current", "page")
+</script>
+{% endblock %}
