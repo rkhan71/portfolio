@@ -3,7 +3,9 @@
 {% block page %}Contact{% endblock %}
 
 {% block body %}
+<!-- Show form if user has not sent an email yet -->
 {% if not sent %}
+<!-- Form for user to send me an email -->
 <div class="container px-5">
     <form action="/contact" method="POST">
         <div class="mb-3">
@@ -23,6 +25,7 @@
         </div>
     </form>
 </div>
+<!-- Once email is sent show user a success message -->
 {% else %}
 <div class="container">
     Your message has been sent successfully! A copy has been sent to the email address you put in above. It's probably in your spam folder.

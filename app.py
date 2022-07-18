@@ -1,5 +1,6 @@
 from flask import Flask, render_template, redirect, request
 from mailjet_rest import Client
+import os
 
 app = Flask(__name__)
 
@@ -21,6 +22,7 @@ def projects():
 @app.route("/contact", methods=["GET", "POST"])
 def contact():
     if request.method == "POST":
+        # Make sure all required data is submitted in form
         if not request.form.get("name"):
             return redirect("/")
         if not request.form.get("email"):
@@ -30,9 +32,13 @@ def contact():
         name = request.form.get("name")
         email = request.form.get("email")
         message = request.form.get("message")
-        api_key = '3c7cbcf70fe0f8cc6f9b43fedb4c9502'
-        api_secret = 'f5da1f9005ddd5165317ef7a6f3d6478'
+
+        # Store sensitive keys in environment and get them from there. Use this to set up sending the email with mailjet API.
+        api_key = os.environ["MJ_API_KEY"]
+        api_secret = os.environ["MJ_API_SEC"]
         mailjet = Client(auth=(api_key, api_secret), version='v3.1')
+
+        # This is a dictionary of all the information that mailjet needs to send the email
         data = {
         'Messages': [
             {
@@ -49,6 +55,7 @@ def contact():
                     "Email": "rayan.ahkhan@gmail.com",
                     "Name": "Rayan"
                 },
+                # Send email to user as well
                 {
                     "Email": email,
                     "Name": name
@@ -59,7 +66,11 @@ def contact():
             }
         ]
         }
+        
+        # Send email
         mailjet.send.create(data=data)
+
+        # Variable to check when email is sent so message can be shown on users screen
         sent = True
     else:
         sent = False
