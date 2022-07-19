@@ -13,3 +13,7 @@ body, html {
 .heading {
     height: 250px;
 }
+
+.accordion-button:not(.collapsed)::after {
+    filter: brightness(0%);
+}
